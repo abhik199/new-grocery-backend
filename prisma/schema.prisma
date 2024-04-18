@@ -26,6 +26,8 @@ model User {
   password   String
   isVerified Boolean  @default(false)
   role       UserRole @default(user)
+  otp        Int
+  otpExpiry  String
 }
 
 model Category {

@@ -39,7 +39,28 @@ const createProduct = async (
     return next(error);
   }
 };
+const getProduct = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const product = await prisma.product.findMany({
+      include: {
+        category: true,
+        images: true,
+      },
+    });
+    if (product) {
+      res.status(200).json({
+        message: "Product fetched successfully",
+        product,
+      });
+    }
+
+    return res.json({ success: false, message: "failed to retrieve product" });
+  } catch (error) {
+    return next(error);
+  }
+};
 
 export const productController = {
   createProduct,
+  getProduct,
 };
